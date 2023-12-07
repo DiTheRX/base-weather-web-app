@@ -1,0 +1,156 @@
+---
+openapi: 3.0.3
+info:
+  title: CaseGuru - Weather app
+  version: 0.0.1
+servers:
+  - url: http://localhost:3000
+tags:
+  - name: weather
+    description: Get Current Weather
+  - name: user
+    description: Operations about user
+
+paths:
+  /authentication:
+    post:
+      tags:
+        - authentication
+      summary: authentication
+      description: |
+        Позволяет производить аутентификацию
+      operationId: authentication
+      parameters:
+        - name: login
+          in: query
+          description: Login пользователя
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: Пароль пользователя
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+      requestBody:
+        description: Пользователь прошел аутентификацию
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        "200":
+          description: Пользователь создан
+
+  /registration:
+    post:
+      tags:
+        - registration
+      summary: registration user
+      operationId: registration user
+      parameters:
+        - name: login
+          in: query
+          description: Login пользователя
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: Пароль пользователя
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+        - name: fio
+          in: query
+          description: ФИО пользователя
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+      description: |
+        Регистрация пользователя
+      requestBody:
+        description: Пользователь зарегистрирован
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        "200":
+          description: Пользователь зарегистрирован
+
+  /weather:
+    post:
+      tags:
+        - weather
+      summary: weather
+      description: |
+        Позволяет производить аутентификацию
+      operationId: weather
+      parameters:
+        - name: apiToken
+          in: query
+          description: Токен пользователя
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+        - name: city
+          in: query
+          description: Город пользователя
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+        - name: language
+          in: query
+          description: Язык пользователя
+          style: form
+          explode: true
+          schema:
+            type: string
+      requestBody:
+        description: Пользователь узнал погоду
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Weather'
+      responses:
+        "200":
+          description: Пользователь узнал погоду
+
+components:
+  schemas:
+    Weather:
+      required:
+        - temp_c
+      type: object
+      properties:
+        temp_c:
+          type: number
+          example: "7"
+    User:
+      required:
+        - apiToken
+        - fio
+      type: object
+      properties:
+        token:
+          type: string
+          example: "7ee40c48-e415-4fb6-a711-81e074c754a2"
+        user:
+          type: string
+          example: "MyLogin"
