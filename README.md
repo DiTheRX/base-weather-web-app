@@ -1,2 +1,2 @@
-# base-weather-web-app-
+# base-weather-web-app
 Base weather app  for CaseGuru
